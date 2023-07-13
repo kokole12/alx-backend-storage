@@ -1,15 +1,4 @@
--- stores items
-DROP TABLE IF EXISTS items;
-DROP TABLE IF EXISTS orders;
+-- trigger to reduce the quantity of a product
 
-CREATE TABLE IF NOT EXISTS items (
-    name VARCHAR(255) NOT NULL,
-    quantity int NOT NULL DEFAULT 10
-);
-
-CREATE TABLE IF NOT EXISTS orders (
-    item_name VARCHAR(255) NOT NULL,
-    number int NOT NULL
-);
-
-INSERT INTO items (name) VALUES ("apple"), ("pineapple"), ("pear");
+CREATE TRIGGER decrease_items_quantity AFTER INSERT ON orders FOR EACH ROW
+UPDATE items SET quantity = quantity - NEW.number WHERE name=NEW.item_name;
