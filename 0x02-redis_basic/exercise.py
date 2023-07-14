@@ -42,12 +42,9 @@ def replay(fn: Callable):
     except Exception:
         value = 0
 
-    # print(f"{function_name} was called {value} times")
     print("{} was called {} times:".format(function_name, value))
-    # inputs = r.lrange(f"{function_name}:inputs", 0, -1)
     inputs = r.lrange("{}:inputs".format(function_name), 0, -1)
 
-    # outputs = r.lrange(f"{function_name}:outputs", 0, -1)
     outputs = r.lrange("{}:outputs".format(function_name), 0, -1)
 
     for input, output in zip(inputs, outputs):
@@ -61,7 +58,7 @@ def replay(fn: Callable):
         except Exception:
             output = ""
 
-        # print(f"{function_name}(*{input}) -> {output}")
+        """print(f"{function_name}(*{input}) -> {output}")"""
         print("{}(*{}) -> {}".format(function_name, input, output))
 
 
