@@ -33,33 +33,27 @@ def call_history(method: Callable) -> Callable:
 
 
 def replay(fn: Callable):
-    """display the history of calls of a particular function"""
+    '''display the history of calls of a particular function.'''
     r = redis.Redis()
-    function_name = fn.__qualname__
-    value = r.get(function_name)
+    func_name = fn.__qualname__
+    c = r.get(func_name)
     try:
-        value = int(value.decode("utf-8"))
+        c = int(c.decode("utf-8"))
     except Exception:
-        value = 0
-
-    print("{} was called {} times:".format(function_name, value))
-    inputs = r.lrange("{}:inputs".format(function_name), 0, -1)
-
-    outputs = r.lrange("{}:outputs".format(function_name), 0, -1)
-
-    for input, output in zip(inputs, outputs):
+        c = 0
+    print("{} was called {} times:".format(func_name, c))
+    inputs = r.lrange("{}:inputs".format(func_name), 0, -1)
+    outputs = r.lrange("{}:outputs".format(func_name), 0, -1)
+    for inp, outp in zip(inputs, outputs):
         try:
-            input = input.decode("utf-8")
+            inp = inp.decode("utf-8")
         except Exception:
-            input = ""
-
+            inp = ""
         try:
-            output = output.decode("utf-8")
+            outp = outp.decode("utf-8")
         except Exception:
-            output = ""
-
-        """print(f"{function_name}(*{input}) -> {output}")"""
-        print("{}(*{}) -> {}".format(function_name, input, output))
+            outp = ""
+        print("{}(*{}) -> {}".format(func_name, inp, outp))
 
 
 class Cache:
