@@ -6,7 +6,7 @@ from typing import Union, Callable, Optional
 from functools import wraps
 
 
-def count_calls(method: callable) -> Callable:
+def count_calls(method: Callable) -> Callable:
     """counting the number of calls to a method"""
     key = method.__qualname__
 
