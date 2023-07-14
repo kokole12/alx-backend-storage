@@ -5,6 +5,8 @@ import requests
 import redis
 
 db = redis.Redis()
+
+
 def count_url_requests(method):
     """decorator to count calls"""
     @wraps(method)
