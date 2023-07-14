@@ -17,6 +17,7 @@ def count_calls(method: Callable) -> Callable:
         return method(self, *args, **kwargs)
     return wrapper
 
+
 def call_history(method: Callable) -> Callable:
     """store the history of inputs and outputs"""
     @wraps(method)
@@ -29,6 +30,7 @@ def call_history(method: Callable) -> Callable:
         return output
 
     return wrapper
+
 
 def replay(fn: Callable):
     """display the history of calls of a particular function"""
@@ -61,6 +63,7 @@ def replay(fn: Callable):
 
         # print(f"{function_name}(*{input}) -> {output}")
         print("{}(*{}) -> {}".format(function_name, input, output))
+
 
 class Cache:
     def __init__(self):
