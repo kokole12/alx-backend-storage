@@ -57,13 +57,18 @@ def replay(fn: Callable):
 
 
 class Cache:
+    """creading a class of cache"""
+
+
     def __init__(self):
+        """Initializing values for cache class"""
         self._redis = redis.Redis()
         self._redis.flushdb()
 
     @call_history
     @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
+        """ storing in to redis list"""
         key = str(uuid4)
         self._redis.set(key, data)
         return key
